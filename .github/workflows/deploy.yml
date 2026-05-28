@@ -1,9 +1,11 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
     branches:
       - main
+
+permissions:
+  contents: write # ЭТО ВАЖНО: дает права на запись
 
 jobs:
   build:
@@ -17,5 +19,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # Ветка, куда кладем результат
-          folder: dist     # А вот и папка, которую надо деплоить
+          branch: gh-pages
+          folder: dist

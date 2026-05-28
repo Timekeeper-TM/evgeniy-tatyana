@@ -17,4 +17,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # Vite кладет результат сборки в папку dist
+          branch: gh-pages # Ветка, куда кладем результат
+          folder: dist     # А вот и папка, которую надо деплоить

@@ -5,7 +5,7 @@ on:
       - main
 
 permissions:
-  contents: write # ЭТО ВАЖНО: дает права на запись
+  contents: write
 
 jobs:
   build:

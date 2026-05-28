@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/wedding-invitation/', // Вот эта строчка исправляет белый экран
   optimizeDeps: {
     exclude: ['lucide-react'],
   },

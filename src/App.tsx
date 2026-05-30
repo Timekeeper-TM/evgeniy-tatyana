@@ -15,10 +15,8 @@ interface EventSettings {
 
 interface RSVPForm {
   name: string;
-  email: string;
   phone: string;
   attending: boolean;
-  guest_count: number;
   message: string;
 }
 
@@ -52,10 +50,10 @@ const CountdownTimer = ({ targetDate }: { targetDate: Date }) => {
   return (
     <div className="flex justify-center gap-4 md:gap-8 mb-12">
       {[
-        { value: timeLeft.days, label: 'Days' },
-        { value: timeLeft.hours, label: 'Hours' },
-        { value: timeLeft.minutes, label: 'Minutes' },
-        { value: timeLeft.seconds, label: 'Seconds' }
+        { value: timeLeft.days, label: 'Дни' },
+        { value: timeLeft.hours, label: 'Часы' },
+        { value: timeLeft.minutes, label: 'Минуты' },
+        { value: timeLeft.seconds, label: 'Секунды' }
       ].map((item, idx) => (
         <div key={idx} className="text-center">
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6 min-w-[80px] md:min-w-[110px] transition-transform hover:scale-105">
@@ -109,12 +107,13 @@ const EventSchedule = () => {
 const RSVPSection = ({ onRSVPSubmit }: { onRSVPSubmit: () => void }) => {
   const [formData, setFormData] = useState<RSVPForm>({
     name: '',
-    email: '',
-    phone: '',
+    surname: '', // Здесь теперь фамилия
     attending: true,
     guest_count: 1,
     message: ''
   });
+
+  // ... остальной код (handleSubmit и return)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -153,47 +152,35 @@ const RSVPSection = ({ onRSVPSubmit }: { onRSVPSubmit: () => void }) => {
   return (
     <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
       <h3 className="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900 font-serif">
-        RSVP
+        Пожалуйста, ответьте
       </h3>
       <form onSubmit={handleSubmit} className="space-y-6 max-w-xl mx-auto">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Имя</label>
           <input
             type="text"
             required
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
-            placeholder="Your full name"
+            placeholder="Введите ваше имя"
           />
         </div>
-
+       
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-          <input
-            type="email"
-            required
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
-            placeholder="your@email.com"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Phone (Optional)</label>
-          <input
-            type="tel"
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
-            placeholder="+1 (555) 000-0000"
-          />
-        </div>
+  <label className="block text-sm font-medium text-gray-700 mb-2">Фамилия</label>
+  <input
+    type="text"
+    value={formData.surname}
+    onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
+    className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
+    placeholder="Введите вашу фамилию"
+  />
+</div>
 
         <div className="flex gap-4">
           <label className="flex-1">
-            <span className="block text-sm font-medium text-gray-700 mb-2">Attending?</span>
+            <span className="block text-sm font-medium text-gray-700 mb-2">Придёте?</span>
             <div className="flex gap-3">
               <button
                 type="button"
@@ -204,50 +191,31 @@ const RSVPSection = ({ onRSVPSubmit }: { onRSVPSubmit: () => void }) => {
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                Yes
+                Да
               </button>
               <button
                 type="button"
-                onClick={() => setFormData({ ...formData, attending: false, guest_count: 1 })}
+                onClick={() => setFormData({ ...formData, attending: false })}
                 className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all ${
                   !formData.attending
                     ? 'bg-red-500 text-white shadow-md'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                No
+                Нет
               </button>
             </div>
           </label>
         </div>
 
-        {formData.attending && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Number of Guests
-            </label>
-            <select
-              value={formData.guest_count}
-              onChange={(e) => setFormData({ ...formData, guest_count: parseInt(e.target.value) })}
-              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
-            >
-              {[1, 2, 3, 4, 5].map((num) => (
-                <option key={num} value={num}>
-                  {num} {num === 1 ? 'Guest' : 'Guests'}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Message (Optional)</label>
+                <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Что будете пить?</label>
           <textarea
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all resize-none"
             rows={3}
-            placeholder="Looking forward to it!"
+            placeholder="Водка, Вино, Пиво, Ром, Самогон, Шампанское, Ёрш, Северное сияние, АПСЕНТ?"
           />
         </div>
 
@@ -261,7 +229,7 @@ const RSVPSection = ({ onRSVPSubmit }: { onRSVPSubmit: () => void }) => {
           ) : (
             <>
               <Send className="w-5 h-5" />
-              Send RSVP
+              Отправка...
             </>
           )}
         </button>
@@ -271,57 +239,60 @@ const RSVPSection = ({ onRSVPSubmit }: { onRSVPSubmit: () => void }) => {
 };
 
 const VenueSection = ({ settings }: { settings: EventSettings | null }) => {
-  const mapEmbedUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0-QbyHqYpTBYLZPsFX3GgXqPnDgJqA&q=${encodeURIComponent(settings?.venue_address || '')}`;
-
   return (
     <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
       <div className="p-8 md:p-12">
         <h3 className="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900 font-serif">
-          Venue
+          Место проведения
         </h3>
-        <div className="flex flex-col md:flex-row items-center gap-8">
-          <div className="flex-1 mb-8 md:mb-0 md:pr-8">
-            <div className="flex items-center gap-3 mb-4 text-gray-600">
-              <MapPin className="w-6 h-6 text-amber-500" />
-              <h4 className="text-2xl font-bold text-gray-900 font-serif">
-                {settings?.venue_name || 'Crystal Arena'}
-              </h4>
-            </div>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              {settings?.venue_address || '45 Harmony Boulevard, Music City, MC 12345'}
-            </p>
-          </div>
-          <div className="flex-none">
-            <a
-              href={settings?.venue_map_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings?.venue_address || '')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-medium transition-all hover:shadow-lg"
-            >
-              <MapPin className="w-5 h-5" />
-              Проложить маршрут
-            </a>
-          </div>
+        <p className="text-center text-lg text-gray-600 leading-relaxed mb-8">
+          PORTCAFE, г. Пермь, ул. Нижнекамская 5а <br />
+              </p>
+
+        <div className="flex flex-col gap-3">
+          <a
+            href="https://yandex.ru/maps/-/CPHPZZ-2" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-amber-600 hover:bg-amber-700 text-white text-center py-3 px-6 rounded-xl font-medium transition-all"
+          >
+            Открыть в Яндекс.Картах
+          </a>
+          <a
+            href="https://go.2gis.com/8n4xH" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gray-800 hover:bg-gray-900 text-white text-center py-3 px-6 rounded-xl font-medium transition-all"
+          >
+            Открыть в 2ГИС
+          </a>
         </div>
-      </div>
-      <div className="relative h-80 bg-gray-200">
-        <iframe
-          src={mapEmbedUrl}
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="absolute inset-0 w-full h-full"
-          title="Venue Map"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none"></div>
       </div>
     </div>
   );
 };
-
+const PersonalInvite = () => {
+  return (
+    <section id="invite" className="py-16 px-4 bg-white">
+      <div className="max-w-2xl mx-auto text-center">
+        <h2 className="text-3xl font-serif text-gray-900 mb-6">Дорогие друзья!</h2>
+        <p className="text-lg text-gray-700 leading-relaxed mb-8">
+          Это официальное приглашение на нашу свадьбу! 
+          А получили вы его потому, что мы очень хотим видеть Вас в этот день рядом с нами!
+        </p>
+        
+        {/* Путь изменен на правильный */}
+        <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+          <img 
+            src="/wedding-invitation/1.jpg" 
+            alt="Наше фото" 
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
 function App() {
   const [settings, setSettings] = useState<EventSettings | null>(null);
 
@@ -329,8 +300,8 @@ function App() {
     setSettings(null); // Это заставит сайт всегда использовать ваш текст из кода
   }, []);
   const eventDate = settings?.event_date
-    ? new Date(settings.event_date)
-    : new Date('2026-08-15T19:00:00Z');
+  ? new Date(settings.event_date)
+  : new Date('2026-08-06T16:30:00'); // Указали 6 августа, 16:30
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString('en-US', {
@@ -358,23 +329,27 @@ function App() {
       {/* Hero Section */}
       <header
         id="hero"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 py-20"
-        style={{
-          background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%), url(https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&auto=format)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundBlendMode: 'multiply'
-        }}
-      >
+className="relative min-h-screen flex flex-col justify-center items-center px-4 py-20"
+style={{
+  backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%), url("/wedding-invitation/wedding-Photo.jpg")',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundBlendMode: 'multiply'
+}}
+>
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center mb-8">
           <Music className="w-16 h-16 md:w-20 md:h-20 text-amber-400 mx-auto mb-8 animate-pulse" />
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 font-serif tracking-tight">
             {settings?.event_name || 'Евгений & Татьяна '}
           </h1>
-          <h2 className="text-2xl md:text-3xl text-white/90 font-light tracking-wide">
-          {settings?.main_artist_name || 'Приглашаем на нашу свадьбу!'}
-          </h2>
+          <h2 className="text-2xl md:text-3xl text-white/90 font-light tracking-wide mb-2">
+  {settings?.main_artist_name || 'Приглашаем на нашу свадьбу!'}
+</h2>
+{/* Добавляем тот же стиль font-light и tracking-wide */}
+<p className="text-2xl md:text-3xl text-white/90 font-light tracking-wide">
+  06.08.2026
+</p>
         </div>
 
         <div className="relative z-10 w-full max-w-4xl">
@@ -393,16 +368,17 @@ function App() {
               className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl transition-all hover:scale-105 flex items-center justify-center gap-2"
             >
               <MapPin className="w-5 h-5" />
-              Get Directions
+              Проложить маршрут
             </button>
           </div>
         </div>
 
         <div className="relative z-10 mt-8 text-white/60 text-sm uppercase tracking-wider flex flex-col items-center gap-2">
           <ChevronDown className="w-6 h-6 animate-bounce" />
-          <span>Scroll to explore</span>
+          <span>Прокрутите</span>
         </div>
       </header>
+      <PersonalInvite />
            {/* Schedule Section */}
       <section id="schedule" className="py-20 md:py-32 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">

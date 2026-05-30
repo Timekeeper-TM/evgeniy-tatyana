@@ -386,7 +386,7 @@ function App() {
               className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl transition-all hover:scale-105 flex items-center justify-center gap-2"
             >
               <Users className="w-5 h-5" />
-              RSVP Now
+              Потвердите участие
             </button>
             <button
               onClick={() => scrollToSection('venue')}
@@ -469,7 +469,7 @@ function App() {
             <button onClick={() => scrollToSection('schedule')} className="hover:text-white transition-colors">
               Schedule
             </button>
-            <button onClick={() => scrollToSection('rsvp')} className="hover:text-white transition-colors">
+            <button onClick={() => scrollToSection('Подтвердить участие')} className="hover:text-white transition-colors">
               RSVP
             </button>
             <button onClick={() => scrollToSection('venue')} className="hover:text-white transition-colors">

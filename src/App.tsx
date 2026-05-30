@@ -152,7 +152,7 @@ const RSVPSection = ({ onRSVPSubmit }: { onRSVPSubmit: () => void }) => {
   return (
     <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
       <h3 className="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900 font-serif">
-        Пожалуйста, ответьте
+        Пожалуйста, заполните форму, чтобы мы могли учесть все детали и сделать праздник комфортным.
       </h3>
       <form onSubmit={handleSubmit} className="space-y-6 max-w-xl mx-auto">
         <div>
@@ -273,7 +273,7 @@ const VenueSection = ({ settings }: { settings: EventSettings | null }) => {
 };
 const PersonalInvite = () => {
   return (
-    <section id="invite" className="py-16 px-4 bg-white">
+    <section id="invite" className="py-20 px-4 bg-white"> {/* Вернули белый фон */}
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-3xl font-serif text-gray-900 mb-6">Дорогие друзья!</h2>
         <p className="text-lg text-gray-700 leading-relaxed mb-8">
@@ -281,7 +281,6 @@ const PersonalInvite = () => {
           А получили вы его потому, что мы очень хотим видеть Вас в этот день рядом с нами!
         </p>
         
-        {/* Путь изменен на правильный */}
         <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-white">
           <img 
             src="/wedding-invitation/1.jpg" 
@@ -293,7 +292,80 @@ const PersonalInvite = () => {
     </section>
   );
 };
+const DressCodeSection = () => {
+  return (
+    <section id="dress-code" className="py-20 px-4 bg-white">
+      <div className="max-w-5xl mx-auto text-center">
+        <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif">
+          Дресс-код
+        </h3>
+        <p className="text-lg text-gray-700 mb-10 max-w-2xl mx-auto">
+          Мы будем признательны, если вы поддержите цветовую гамму нашей свадьбы. 
+          Будем рады видеть вас в нарядах данных оттенков:
+        </p>
+        
+        {/* Фото цветовой гаммы: 6 штук, 3 ряда по 2 или 2 ряда по 3 */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {[1, 2, 3, 4, 5, 6].map((num) => (
+            <div key={num} className="rounded-2xl overflow-hidden shadow-md">
+              <img 
+                src={`/wedding-invitation/color${num}.jpg`} 
+                alt={`Цвет ${num}`} 
+                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" 
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+const WeddingDaySchedule = () => {
+  const schedule = [
+    { time: '16:30', event: 'Сбор гостей' },
+    { time: '17:00', event: 'Церемония регистрации' },
+    { time: '18:00', event: 'Банкет' },
+    { time: '23:00', event: 'Завершение мероприятия' }
+  ];
+
+  return (
+    <section id="schedule" className="py-12 px-4 bg-gray-50">
+      <div className="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl p-8 md:p-12">
+        {/* Часть с календарем */}
+        <div className="text-center mb-10">
+          <h3 className="text-4xl font-serif text-gray-800 mb-8 italic">Август 2026</h3>
+          <div className="flex justify-center items-center gap-6 text-3xl font-light text-gray-600">
+            <span>4</span> <span>5</span>
+            <div className="relative flex items-center justify-center w-16 h-16">
+              <Heart className="absolute w-16 h-16 text-red-400 fill-current" />
+              <span className="relative z-10 text-white font-medium">6</span>
+            </div>
+            <span>7</span> <span>8</span>
+          </div>
+        </div>
+
+        {/* Разделитель */}
+        <div className="h-px bg-gray-100 w-full mb-10" />
+
+        {/* Часть с программой */}
+        <h3 className="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900 font-serif">
+          Программа дня
+        </h3>
+        <div className="flex flex-col items-center space-y-4">
+          {schedule.map((item, idx) => (
+            <div key={idx} className="text-center">
+              <div className="text-2xl font-light text-gray-900">{item.time}</div>
+              <div className="text-lg text-gray-700 font-medium mb-2">{item.event}</div>
+              {idx < schedule.length - 1 && <div className="text-gray-300">|</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 function App() {
+  
   const [settings, setSettings] = useState<EventSettings | null>(null);
 
   useEffect(() => {
@@ -328,19 +400,20 @@ function App() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Hero Section */}
       <header
-        id="hero"
-className="relative min-h-screen flex flex-col justify-center items-center px-4 py-20"
-style={{
-  backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%), url("/wedding-invitation/wedding-Photo.jpg")',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundBlendMode: 'multiply'
-}}
+  id="hero"
+  className="relative min-h-screen flex flex-col justify-center items-center px-4 py-20"
+  style={{
+    // Убираем #0a0a0a, возвращаем нейтральный градиент
+    backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%), url("/wedding-invitation/wedding-Photo.jpg")',
+    backgroundSize: 'cover',
+    backgroundPosition: '50% 45%',
+    backgroundRepeat: 'no-repeat',
+    backgroundBlendMode: 'multiply'
+  }}
 >
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center mb-8">
-          <Music className="w-16 h-16 md:w-20 md:h-20 text-amber-400 mx-auto mb-8 animate-pulse" />
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 font-serif tracking-tight">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 font-serif tracking-tight">
             {settings?.event_name || 'Евгений & Татьяна '}
           </h1>
           <h2 className="text-2xl md:text-3xl text-white/90 font-light tracking-wide mb-2">
@@ -379,15 +452,17 @@ style={{
         </div>
       </header>
       <PersonalInvite />
+      {/* ВСТАВЬТЕ КАЛЕНДАРЬ СЮДА */}
+        <WeddingDaySchedule />
            {/* Schedule Section */}
       <section id="schedule" className="py-20 md:py-32 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <EventSchedule />
+    
         </div>
       </section>
-
+<DressCodeSection />
       {/* RSVP Section */}
-      <section id="rsvp" className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-gray-100">
+      <section id="rsvp" className="py-1 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-gray-100">
         <div className="max-w-2xl mx-auto">
           <RSVPSection onRSVPSubmit={handleRSVPSubmit} />
         </div>
@@ -405,7 +480,7 @@ style={{
         <div className="text-center">
           <Music className="w-8 h-8 text-amber-400 mx-auto mb-4 animate-pulse" />
           <p className="text-gray-400 text-sm">
-            {settings?.event_name || 'Евгений & Татьяна 2026'} | All rights reserved
+            {settings?.event_name || 'Евгений & Татьяна 2026'} | Все права защищены (наверно)
           </p>
           <div className="flex justify-center gap-6 mt-6 text-sm text-gray-500">
             <button onClick={() => scrollToSection('hero')} className="hover:text-white transition-colors">

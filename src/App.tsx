@@ -74,31 +74,31 @@ const CountdownTimer = ({ targetDate }: { targetDate: Date }) => {
 
 const EventSchedule = () => {
   const schedule = [
-    { time: '18:00', event: 'Doors Open', icon: '🚪' },
-    { time: '19:00', event: 'Opening Act', icon: '🎸' },
-    { time: '20:30', event: 'Main Performance', icon: '🎤' },
-    { time: '22:30', event: 'Encore', icon: '✨' },
-    { time: '23:00', event: 'After Party', icon: '🎉' }
+    { time: '16:30', event: 'Сбор гостей' },
+    { time: '17:00', event: 'Церемония регистрации' },
+    { time: '18:00', event: 'Банкет' },
+    { time: '23:00', event: 'Завершение мероприятия' }
   ];
+  // ...
 
   return (
     <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
       <h3 className="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900 font-serif">
-        Event Schedule
+        Программа дня
       </h3>
-      <div className="space-y-6">
+      <div className="flex flex-col items-center space-y-4">
         {schedule.map((item, idx) => (
-          <div key={idx} className="flex items-center gap-6 group">
-            <div className="text-2xl md:text-3xl font-bold text-gray-900 min-w-[100px] font-serif">
+          <div key={idx} className="text-center">
+            <div className="text-2xl md:text-3xl font-light text-gray-900">
               {item.time}
             </div>
-            <div className="flex-1 h-px bg-gradient-to-r from-amber-400 to-transparent relative">
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-amber-500 shadow-md transition-transform group-hover:scale-125"></div>
+            <div className="text-lg text-gray-700 font-medium mb-2">
+              {item.event}
             </div>
-            <div className="flex items-center gap-3 bg-gray-50 rounded-xl px-6 py-3 shadow-sm min-w-[200px]">
-              <span className="text-2xl">{item.icon}</span>
-              <span className="font-medium text-gray-800">{item.event}</span>
-            </div>
+            {/* Рисуем вертикальную черточку, кроме последнего элемента */}
+            {idx < schedule.length - 1 && (
+              <div className="text-gray-300">|</div>
+            )}
           </div>
         ))}
       </div>
@@ -299,7 +299,7 @@ const VenueSection = ({ settings }: { settings: EventSettings | null }) => {
               className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-xl font-medium transition-all hover:shadow-lg"
             >
               <MapPin className="w-5 h-5" />
-              Get Directions
+              Проложить маршрут
             </a>
           </div>
         </div>
@@ -403,38 +403,7 @@ function App() {
           <span>Scroll to explore</span>
         </div>
       </header>
-
-      {/* Event Info */}
-      <section className="py-16 md:py-24 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl p-8 md:p-12 shadow-lg">
-              <Calendar className="w-12 h-12 text-amber-600 mb-6" />
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 font-serif">Date & Time</h3>
-              <p className="text-xl font-bold text-gray-900 mb-4 font-serif">{formatDate(eventDate)}</p>
-              <div className="flex items-center gap-3 text-lg text-gray-700">
-                <Clock className="w-5 h-5 text-amber-600" />
-                <span>Doors at 6:00 PM</span>
-              </div>
-              <div className="flex items-center gap-3 text-lg text-gray-700 mt-2">
-                <Clock className="w-5 h-5 text-amber-600" />
-                <span>Show starts at {eventDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 md:p-12 shadow-lg">
-              <Mic2 className="w-12 h-12 text-gray-700 mb-6" />
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 font-serif">Featured Artist</h3>
-              <p className="text-2xl font-bold text-gray-900 mb-4 font-serif">{settings?.main_artist_name || 'The Midnight Echo'}</p>
-              <p className="text-gray-600 leading-relaxed">
-                {settings?.main_artist_bio || 'An award-winning electronic music duo known for their mesmerizing live performances and chart-topping hits.'}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Schedule Section */}
+           {/* Schedule Section */}
       <section id="schedule" className="py-20 md:py-32 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <EventSchedule />

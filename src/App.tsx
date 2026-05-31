@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useRef } from 'react';
 import { Music, Calendar, MapPin, Clock, Mic2, Heart, Send, ChevronDown, Users } from 'lucide-react';
-import { supabase } from './lib/supabase';
-
 interface EventSettings {
   event_name: string;
   event_date: string;
@@ -121,29 +119,34 @@ const RSVPSection = ({ onRSVPSubmit }: { onRSVPSubmit: () => void }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const { error } = await supabase.from('guests').insert([formData]);
-      if (error) throw error;
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwvYbsR2zjgNRbV3u3WdnHm2t690BbsaOsY_x9gnrMeIYnVBsEghBAJ30MB4a40CsXL/exec';
 
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
       setSubmitted(true);
       onRSVPSubmit();
     } catch (error) {
-      console.error('Error submitting RSVP:', error);
-      alert('Failed to submit RSVP. Please try again.');
+      console.error('Ошибка:', error);
+      alert('Ошибка при отправке. Попробуйте еще раз.');
     } finally {
       setIsSubmitting(false);
     }
   };
-
   if (submitted) {
     return (
       <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 text-center">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <Heart className="w-10 h-10 text-green-600" fill="currentColor" />
         </div>
-        <h3 className="text-3xl font-bold text-gray-900 mb-4 font-serif">Thank You!</h3>
+        <h3 className="text-3xl font-bold text-gray-900 mb-4 font-serif">Спасибо!</h3>
         <p className="text-gray-600 text-lg">
-          Your RSVP has been received. We look forward to seeing you!
+          Ваш ответ получен. Будем рады вас видеть!
         </p>
       </div>
     );
@@ -364,8 +367,35 @@ const WeddingDaySchedule = () => {
     </section>
   );
 };
+  // 1. Сначала идет сам компонент плеера (всё его определение)
+const FloatingMusicPlayer = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isPlaying) audioRef.current.pause();
+      else audioRef.current.play();
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  return (
+    <div className="fixed top-6 right-6 z-50">
+      <audio ref={audioRef} loop src={`${import.meta.env.BASE_URL}music.mp3`} />
+      <button 
+        onClick={toggleMusic} 
+        className="bg-gray-900/60 backdrop-blur-md p-3 rounded-full shadow-lg hover:bg-gray-900/80 transition-all border border-white/20"
+      >
+        <Music className={`w-7 h-7 stroke-[2.5] ${isPlaying ? 'text-amber-400 animate-pulse' : 'text-white'}`} />
+      </button>
+    </div>
+  );
+};
+
+// 2. И только СРАЗУ ПОСЛЕ него начинается App
 function App() {
-  
+    
   const [settings, setSettings] = useState<EventSettings | null>(null);
 
   useEffect(() => {
@@ -396,11 +426,13 @@ function App() {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return (
+return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+      {/* Плеер вызывается один раз в начале главного контейнера */}
+      <FloatingMusicPlayer />
+      
       {/* Hero Section */}
-      <header
-  id="hero"
+      <header id="hero"
   className="relative min-h-screen flex flex-col justify-center items-center px-4 py-20"
   style={{
     // Убираем #0a0a0a, возвращаем нейтральный градиент
@@ -478,22 +510,21 @@ function App() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 px-4">
         <div className="text-center">
-          <Music className="w-8 h-8 text-amber-400 mx-auto mb-4 animate-pulse" />
-          <p className="text-gray-400 text-sm">
+                  <p className="text-gray-400 text-sm mt-2">
             {settings?.event_name || 'Евгений & Татьяна 2026'} | Все права защищены (наверно)
           </p>
           <div className="flex justify-center gap-6 mt-6 text-sm text-gray-500">
             <button onClick={() => scrollToSection('hero')} className="hover:text-white transition-colors">
-              Home
+              Дом
             </button>
             <button onClick={() => scrollToSection('schedule')} className="hover:text-white transition-colors">
-              Schedule
+              Программа дня
             </button>
-            <button onClick={() => scrollToSection('Подтвердить участие')} className="hover:text-white transition-colors">
-              RSVP
+            <button onClick={() => scrollToSection('rsvp')} className="hover:text-white transition-colors">
+              Форма
             </button>
             <button onClick={() => scrollToSection('venue')} className="hover:text-white transition-colors">
-              Venue
+              Место проведения
             </button>
           </div>
         </div>

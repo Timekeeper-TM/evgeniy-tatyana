@@ -392,7 +392,31 @@ const FloatingMusicPlayer = () => {
     </div>
   );
 };
+const EnvelopeWrapper = ({ children }: { children: React.ReactNode }) => {
+  const [isOpened, setIsOpened] = useState(false);
 
+  if (!isOpened) {
+  return (
+    // Добавили min-h-screen и w-full для растягивания на весь экран
+    <div 
+      onClick={() => setIsOpened(true)}
+      className="fixed inset-0 min-h-screen w-full flex flex-col items-center justify-center cursor-pointer transition-all duration-500 bg-[#fdfaf5]"
+    >
+      <div className="hover:scale-105 active:scale-95 transition-transform flex flex-col items-center">
+        <img 
+          src="envelope.png" 
+          alt="Конверт" 
+          className="w-[450px] h-auto shadow-2xl rounded-2xl" 
+        />
+        <p className="mt-6 text-amber-900 font-serif text-xl animate-pulse text-center">
+          Нажмите на конверт, чтобы открыть
+        </p>
+      </div>
+    </div>
+  );
+}
+  return <>{children}</>;
+};
 // 2. И только СРАЗУ ПОСЛЕ него начинается App
 function App() {
     
@@ -427,6 +451,7 @@ function App() {
   };
 
 return (
+  <EnvelopeWrapper>
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Плеер вызывается один раз в начале главного контейнера */}
       <FloatingMusicPlayer />
@@ -530,6 +555,7 @@ return (
         </div>
       </footer>
     </div>
+    </EnvelopeWrapper>
   );
 }
 

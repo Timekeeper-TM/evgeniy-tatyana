@@ -393,29 +393,47 @@ const FloatingMusicPlayer = () => {
   );
 };
 const EnvelopeWrapper = ({ children }: { children: React.ReactNode }) => {
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(false); // Состояние: открыт ли конверт
+  const [isFading, setIsFading] = useState(false);  // Состояние: началось ли исчезновение
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleEnvelopeClick = () => {
+    if (videoRef.current) {
+      videoRef.current.play(); // Запускаем видео
+    }
+  };
+
+  // Когда видео закончится, мы сначала запускаем анимацию fade-out
+  const handleVideoEnd = () => {
+    setIsFading(true); 
+    // Через 800мс (длительность анимации) полностью скрываем конверт
+    setTimeout(() => setIsOpened(true), 800);
+  };
 
   if (!isOpened) {
-  return (
-    // Добавили min-h-screen и w-full для растягивания на весь экран
-    <div 
-      onClick={() => setIsOpened(true)}
-      className="fixed inset-0 min-h-screen w-full flex flex-col items-center justify-center cursor-pointer transition-all duration-500 bg-[#fdfaf5]"
-    >
-      <div className="hover:scale-105 active:scale-95 transition-transform flex flex-col items-center">
-        <img 
-          src="envelope.png" 
-          alt="Конверт" 
-          className="w-[450px] h-auto shadow-2xl rounded-2xl" 
-        />
-        <p className="mt-6 text-amber-900 font-serif text-xl animate-pulse text-center">
-          Нажмите на конверт, чтобы открыть
-        </p>
+    return (
+      <div className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#fdfaf5] transition-opacity duration-1000 ${isFading ? 'opacity-0' : 'opacity-100'}`}>
+        <div 
+          onClick={handleEnvelopeClick}
+          className="cursor-pointer transition-transform hover:scale-105 active:scale-95 flex flex-col items-center"
+        >
+          <video 
+            ref={videoRef}
+            src="envelope.mp4" 
+            muted 
+            playsInline 
+            onEnded={handleVideoEnd} // Запускаем наш плавный переход
+            className="w-[600px] max-w-[90vw] h-auto shadow-2xl rounded-2xl" // Увеличили размер
+          />
+          <p className="mt-8 text-amber-900 font-serif text-2xl animate-pulse text-center">
+            Нажмите на конверт, чтобы открыть
+          </p>
+        </div>
       </div>
-    </div>
-  );
-}
-  return <>{children}</>;
+    );
+  }
+
+  return <div className="animate-in fade-in duration-1000">{children}</div>;
 };
 // 2. И только СРАЗУ ПОСЛЕ него начинается App
 function App() {
@@ -511,13 +529,7 @@ return (
       <PersonalInvite />
       {/* ВСТАВЬТЕ КАЛЕНДАРЬ СЮДА */}
         <WeddingDaySchedule />
-           {/* Schedule Section */}
-      <section id="schedule" className="py-20 md:py-32 px-4 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-    
-        </div>
-      </section>
-<DressCodeSection />
+           <DressCodeSection />
       {/* RSVP Section */}
       <section id="rsvp" className="py-1 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-gray-100">
         <div className="max-w-2xl mx-auto">

@@ -497,20 +497,24 @@ return (
         <div className="relative z-10 text-center mb-8">
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 font-serif tracking-tight">
   {settings?.event_name || (
-    <>
-      <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
-        Евгений
-      </span>
-      {' '}
-      <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '1s' }}>
-        <span className="italic font-normal" style={{ fontFamily: 'Georgia, serif' }}>&</span>
-      </span>
-      {' '}
-      <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '1.5s' }}>
-        Татьяна
-      </span>
-    </>
-  )}
+  <>
+    <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
+      Евгений
+    </span>
+    {/* Добавляем перенос только для мобильных */}
+    <br className="md:hidden" />
+    {' '}
+    <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '1s' }}>
+      <span className="italic font-normal" style={{ fontFamily: 'Georgia, serif' }}>&</span>
+    </span>
+    {/* Добавляем перенос только для мобильных */}
+    <br className="md:hidden" />
+    {' '}
+    <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '1.5s' }}>
+      Татьяна
+    </span>
+  </>
+)}
 </h1>
           <h2 className="text-2xl md:text-3xl text-white/90 font-light tracking-wide mb-2">
   {settings?.main_artist_name || 'Приглашаем на нашу свадьбу!'}

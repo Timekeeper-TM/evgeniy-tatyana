@@ -21,11 +21,25 @@ html {
   scroll-behavior: smooth;
 }
 
-@keyframes pulse {
-  0%, 100% {
+@keyframes slow-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.animate-slow-heart {
+  animation: slow-pulse 3s ease-in-out infinite;
+}
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
     opacity: 1;
+    transform: translateY(0);
   }
-  50% {
-    opacity: 0.7;
-  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 3s ease-out forwards;
 }

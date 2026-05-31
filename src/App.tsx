@@ -244,7 +244,7 @@ const RSVPSection = ({ onRSVPSubmit }: { onRSVPSubmit: () => void }) => {
 const VenueSection = ({ settings }: { settings: EventSettings | null }) => {
   return (
     <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-      <div className="p-8 md:p-12">
+      <div className="p-8 md:py-1">
         <h3 className="text-3xl md:text-4xl font-bold text-center mb-10 text-gray-900 font-serif">
           Место проведения
         </h3>
@@ -276,7 +276,7 @@ const VenueSection = ({ settings }: { settings: EventSettings | null }) => {
 };
 const PersonalInvite = () => {
   return (
-    <section id="invite" className="py-20 px-4 bg-white"> {/* Вернули белый фон */}
+    <section id="invite" className="py-5 px-4 bg-white"> {/* Вернули белый фон */}
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-3xl font-serif text-gray-900 mb-6">Дорогие друзья!</h2>
         <p className="text-lg text-gray-700 leading-relaxed mb-8">
@@ -297,7 +297,7 @@ const PersonalInvite = () => {
 };
 const DressCodeSection = () => {
   return (
-    <section id="dress-code" className="py-20 px-4 bg-white">
+    <section id="dress-code" className="pt-5 px-4 bg-white">
       <div className="max-w-5xl mx-auto text-center">
         <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif">
           Дресс-код
@@ -339,10 +339,15 @@ const WeddingDaySchedule = () => {
           <h3 className="text-4xl font-serif text-gray-800 mb-8 italic">Август 2026</h3>
           <div className="flex justify-center items-center gap-6 text-3xl font-light text-gray-600">
             <span>4</span> <span>5</span>
-            <div className="relative flex items-center justify-center w-16 h-16">
-              <Heart className="absolute w-16 h-16 text-red-400 fill-current" />
-              <span className="relative z-10 text-white font-medium">6</span>
-            </div>
+            <div className="relative flex items-center justify-center w-16 h-16 animate-slow-heart">
+  {/* Красное сердечко */}
+  <Heart className="absolute w-16 h-16 text-red-500 fill-current" />
+  
+  {/* Цифра 6 без контура, белая, как в исходном варианте */}
+  <span className="relative z-10 text-white font-medium text-2xl">
+    6
+  </span>
+</div>
             <span>7</span> <span>8</span>
           </div>
         </div>
@@ -490,9 +495,23 @@ return (
 >
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center mb-8">
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 font-serif tracking-tight">
-            {settings?.event_name || 'Евгений & Татьяна '}
-          </h1>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-4 font-serif tracking-tight">
+  {settings?.event_name || (
+    <>
+      <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '0.5s' }}>
+        Евгений
+      </span>
+      {' '}
+      <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '1s' }}>
+        <span className="italic font-normal" style={{ fontFamily: 'Georgia, serif' }}>&</span>
+      </span>
+      {' '}
+      <span className="inline-block animate-fade-in-up opacity-0" style={{ animationDelay: '1.5s' }}>
+        Татьяна
+      </span>
+    </>
+  )}
+</h1>
           <h2 className="text-2xl md:text-3xl text-white/90 font-light tracking-wide mb-2">
   {settings?.main_artist_name || 'Приглашаем на нашу свадьбу!'}
 </h2>
@@ -533,14 +552,16 @@ return (
         <WeddingDaySchedule />
            <DressCodeSection />
       {/* RSVP Section */}
-      <section id="rsvp" className="py-1 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-gray-100">
+      {/* Уменьшили py-32 до py-12, чтобы убрать лишний воздух снизу */}
+      <section id="rsvp" className="py-12 px-4 bg-gradient-to-b from-gray-50 to-gray-100">
         <div className="max-w-2xl mx-auto">
           <RSVPSection onRSVPSubmit={handleRSVPSubmit} />
         </div>
       </section>
 
       {/* Venue Section */}
-      <section id="venue" className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-100 to-gray-50">
+      {/* Уменьшили верхний отступ (pt), чтобы секция «подтянулась» к форме выше */}
+      <section id="venue" className="pt-10 pb-20 md:pt-12 md:pb-32 px-4 bg-gradient-to-b from-gray-100 to-gray-50">
         <div className="max-w-5xl mx-auto">
           <VenueSection settings={settings} />
         </div>

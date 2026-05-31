@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps  # Добавили флаг здесь
       - name: Build
         run: npm run build
         env:

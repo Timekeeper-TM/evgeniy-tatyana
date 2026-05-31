@@ -5,5 +5,5 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: '/evgeniy-tatyana/', // Укажите имя вашего репозитория здесь
   plugins: [react()],
-  // ...
+  base: '/evgeniy-tatyana/', // Имя вашего репозитория со слэшами
 })

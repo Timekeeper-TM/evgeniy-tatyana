@@ -419,7 +419,9 @@ const EnvelopeWrapper = ({ children }: { children: React.ReactNode }) => {
         >
           <video 
             ref={videoRef}
-            src="envelope.mp4" 
+            src="envelope.mp4"
+            poster="envelope-poster.jpg" // <--- Добавьте эту строку 
+            preload="auto" // <--- Это скажет браузеру начать загрузку сразу
             muted 
             playsInline 
             onEnded={handleVideoEnd} // Запускаем наш плавный переход

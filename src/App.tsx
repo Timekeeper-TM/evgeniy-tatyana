@@ -286,7 +286,7 @@ const PersonalInvite = () => {
         
         <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-white">
           <img 
-            src="/wedding-invitation/1.jpg" 
+            src="1.jpg" 
             alt="Наше фото" 
             className="w-full h-auto object-cover"
           />
@@ -312,7 +312,7 @@ const DressCodeSection = () => {
           {[1, 2, 3, 4, 5, 6].map((num) => (
             <div key={num} className="rounded-2xl overflow-hidden shadow-md">
               <img 
-                src={`/wedding-invitation/color${num}.jpg`} 
+                src={`color${num}.jpg`}
                 alt={`Цвет ${num}`} 
                 className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" 
               />
@@ -436,7 +436,7 @@ return (
   className="relative min-h-screen flex flex-col justify-center items-center px-4 py-20"
   style={{
     // Убираем #0a0a0a, возвращаем нейтральный градиент
-    backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%), url("/wedding-invitation/wedding-Photo.jpg")',
+    backgroundImage: 'linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 100%), url("wedding-Photo.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: '50% 45%',
     backgroundRepeat: 'no-repeat',

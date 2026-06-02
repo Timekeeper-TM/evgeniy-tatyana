@@ -29,6 +29,7 @@ html {
 .animate-slow-heart {
   animation: slow-pulse 3s ease-in-out infinite;
 }
+
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -43,3 +44,45 @@ html {
 .animate-fade-in-up {
   animation: fade-in-up 3s ease-out forwards;
 }
+/* ОСТАЛЬНОЙ ВАШ CSS ВЕРХУ НЕ МЕНЯЕМ */
+
+/* Сетка для мобильных: 4 колонки в первом ряду, 3 во втором */
+@media (max-width: 767px) {
+  .dress-code-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 колонки */
+    gap: 12px;
+  }
+
+  .dress-code-grid > div {
+    width: 100%; /* Занимает всю ячейку сетки */
+    height: 120px; /* Высота для мобильных */
+  }
+
+  /* Порядок элементов и размещение во втором ряду для 4+3 */
+  .color-box-1 { order: 1; }
+  .color-box-2 { order: 2; }
+  .color-box-3 { order: 3; }
+  .color-box-6 { order: 4; } 
+
+  /* Второй ряд: 3 элемента по центру (занимают колонки 2, 3, 4) */
+  .color-box-5 { order: 5; grid-column: 2; } 
+  .color-box-4 { order: 6; grid-column: 3; }
+  .color-box-7 { order: 7; grid-column: 4; }
+}
+
+/* Настройки для ПК: фиксированная высота */
+@media (min-width: 768px) {
+  .color-box-1, .color-box-2, .color-box-3, .color-box-4, 
+  .color-box-5, .color-box-6, .color-box-7 {
+    height: 200px; /* Здесь можете менять высоту по вкусу */
+  }
+}
+  /* Порядок для ПК: оливковый (4) перед серебряным (6) */
+  .color-box-1 { order: 1; }
+  .color-box-2 { order: 2; }
+  .color-box-3 { order: 3; }
+  .color-box-4 { order: 4; } /* Оливковый раньше */
+  .color-box-5 { order: 5; }
+  .color-box-6 { order: 6; } /* Серебряный позже */
+  .color-box-7 { order: 7; }

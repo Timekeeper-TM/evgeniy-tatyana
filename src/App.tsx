@@ -296,25 +296,21 @@ const PersonalInvite = () => {
   );
 };
 const DressCodeSection = () => {
+  const colors = [1, 2, 3, 4, 5, 6, 7];
   return (
     <section id="dress-code" className="pt-5 px-4 bg-white">
       <div className="max-w-5xl mx-auto text-center">
         <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif">
-          Дресс-код
-        </h3>
-        <p className="text-lg text-gray-700 mb-10 max-w-2xl mx-auto">
-          Мы будем признательны, если вы поддержите цветовую гамму нашей свадьбы. 
-          Будем рады видеть вас в нарядах данных оттенков:
-        </p>
-        
-        {/* Фото цветовой гаммы: 6 штук, 3 ряда по 2 или 2 ряда по 3 */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {[1, 2, 3, 4, 5, 6].map((num) => (
-            <div key={num} className="rounded-2xl overflow-hidden shadow-md">
-              <img 
+                  </h3>
+              <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+          {colors.map((num) => (
+            <div 
+  key={num} 
+  className={`color-box-${num} w-[calc(25%-12px)] md:w-[calc(14.28%-14px)] aspect-[3/4] md:aspect-auto rounded-2xl overflow-hidden shadow-md`}
+>           <img
                 src={`color${num}.jpg`}
-                alt={`Цвет ${num}`} 
-                className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" 
+                alt={`Цвет ${num}`}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
             </div>
           ))}
@@ -566,7 +562,7 @@ return (
       {/* Venue Section */}
       {/* Уменьшили верхний отступ (pt), чтобы секция «подтянулась» к форме выше */}
       <section id="venue" className="pt-10 pb-20 md:pt-12 md:pb-32 px-4 bg-gradient-to-b from-gray-100 to-gray-50">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <VenueSection settings={settings} />
         </div>
       </section>

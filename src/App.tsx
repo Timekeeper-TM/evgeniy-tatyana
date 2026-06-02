@@ -303,6 +303,11 @@ const DressCodeSection = () => {
     <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif">
       Дресс-код
     </h3>
+    {/* ВОТ ЭТОТ ТЕКСТ ВАМ НУЖНО ВЕРНУТЬ: */}
+    <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+      Мы будем признательны, если вы поддержите цветовую гамму нашей свадьбы. 
+      Будем рады видеть вас в нарядах данных оттенков:
+    </p>
     {/* Добавлен класс dress-code-grid */}
     <div className="dress-code-grid flex flex-wrap justify-center gap-3 md:gap-4">
       {colors.map((num) => (

@@ -46,43 +46,30 @@ html {
 }
 /* ОСТАЛЬНОЙ ВАШ CSS ВЕРХУ НЕ МЕНЯЕМ */
 
-/* Сетка для мобильных: 4 колонки в первом ряду, 3 во втором */
 @media (max-width: 767px) {
   .dress-code-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 колонки */
-    gap: 12px;
+    display: flex !important; /* Важно: принудительный flex */
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 12px !important;
   }
-
+  
   .dress-code-grid > div {
-    width: 100%; /* Занимает всю ячейку сетки */
-    height: 120px; /* Высота для мобильных */
+    width: calc(25% - 10px) !important; /* 4 элемента в ряд */
+    height: 100px !important;
   }
 
-  /* Порядок элементов и размещение во втором ряду для 4+3 */
-  .color-box-1 { order: 1; }
-  .color-box-2 { order: 2; }
-  .color-box-3 { order: 3; }
-  .color-box-6 { order: 4; } 
-
-  /* Второй ряд: 3 элемента по центру (занимают колонки 2, 3, 4) */
-  .color-box-5 { order: 5; grid-column: 2; } 
-  .color-box-4 { order: 6; grid-column: 3; }
-  .color-box-7 { order: 7; grid-column: 4; }
-}
-
-/* Настройки для ПК: фиксированная высота */
-@media (min-width: 768px) {
-  .color-box-1, .color-box-2, .color-box-3, .color-box-4, 
-  .color-box-5, .color-box-6, .color-box-7 {
-    height: 200px; /* Здесь можете менять высоту по вкусу */
+  /* Сбрасываем любые старые настройки grid-column */
+  .dress-code-grid > div {
+    grid-column: auto !important;
   }
+
+  /* Четкий порядок: 4 и 6 поменяны местами */
+  .color-box-1 { order: 1 !important; }
+  .color-box-2 { order: 2 !important; }
+  .color-box-3 { order: 3 !important; }
+  .color-box-6 { order: 4 !important; } /* Серебро */
+  .color-box-5 { order: 5 !important; }
+  .color-box-4 { order: 6 !important; } /* Оливковый */
+  .color-box-7 { order: 7 !important; }
 }
-  /* Порядок для ПК: оливковый (4) перед серебряным (6) */
-  .color-box-1 { order: 1; }
-  .color-box-2 { order: 2; }
-  .color-box-3 { order: 3; }
-  .color-box-4 { order: 4; } /* Оливковый раньше */
-  .color-box-5 { order: 5; }
-  .color-box-6 { order: 6; } /* Серебряный позже */
-  .color-box-7 { order: 7; }

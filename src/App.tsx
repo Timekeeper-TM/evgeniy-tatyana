@@ -299,24 +299,27 @@ const DressCodeSection = () => {
   const colors = [1, 2, 3, 4, 5, 6, 7];
   return (
     <section id="dress-code" className="pt-5 px-4 bg-white">
-      <div className="max-w-5xl mx-auto text-center">
-        <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif">
-                  </h3>
-              <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-          {colors.map((num) => (
-            <div 
-  key={num} 
-  className={`color-box-${num} w-[calc(25%-12px)] md:w-[calc(14.28%-14px)] aspect-[3/4] md:aspect-auto rounded-2xl overflow-hidden shadow-md`}
->           <img
-                src={`color${num}.jpg`}
-                alt={`Цвет ${num}`}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-          ))}
+  <div className="max-w-5xl mx-auto text-center">
+    <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 font-serif">
+      Дресс-код
+    </h3>
+    {/* Добавлен класс dress-code-grid */}
+    <div className="dress-code-grid flex flex-wrap justify-center gap-3 md:gap-4">
+      {colors.map((num) => (
+        <div 
+          key={num} 
+          className={`color-box-${num} w-[calc(25%-12px)] md:w-[calc(14.28%-14px)] aspect-[3/4] md:aspect-auto rounded-2xl overflow-hidden shadow-md`}
+        >
+          <img 
+            src={`color${num}.jpg`}
+            alt={`Цвет ${num}`}
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+          />
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
+  </div>
+</section>
   );
 };
 const WeddingDaySchedule = () => {
